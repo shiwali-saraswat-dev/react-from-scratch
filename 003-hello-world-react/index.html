@@ -15,6 +15,15 @@
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 
     <script>
+    /**
+     * React.createElement() => Object => HTML Element (render)
+     *
+     * React.createElement() returns a plain JS object (a "React Element") —
+     *  a virtual representation of the UI, not a real DOM node.
+     * ReactDOM's render()/root.render() then converts that object into
+     *  an actual HTML element and inserts it into the real DOM.
+     */
+
       const heading = React.createElement("h1", {}, "Hello World from React!");
       const root = ReactDOM.createRoot(document.getElementById("root"));
       root.render(heading);
