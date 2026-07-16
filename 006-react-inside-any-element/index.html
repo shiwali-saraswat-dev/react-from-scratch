@@ -15,16 +15,10 @@
     </div>
     <h1>Hello - Below of Root</h1>
 
-    <!-- This file i.e. react.development.js contains the React Code which is plain JS -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-
-    <!-- This file i.e. react-dom.development.js is useful for DOM operations or use to modify the DOM -->
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-
-    <script>
-      // const heading = React.createElement("h1", {}, "Hello from React!");
-      // const root = ReactDOM.createRoot(document.getElementById("root"));
-      // root.render(heading);
+    <script type="module">
+      // Importing React and ReactDOM from node_modules instead of CDN <script> tags
+      import React from "react";
+      import ReactDOM from "react-dom/client";
 
       const header = ReactDOM.createRoot(document.getElementById("header"));
       header.render(React.createElement("h1", {}, "Hello from React!"));
