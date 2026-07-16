@@ -9,7 +9,8 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "start": "parcel index.html",
-    "build:parcel": "parcel build index.html"
+    "build:parcel": "parcel build index.html",
+    "start:006": "parcel 006-react-inside-any-element/index.html"
   },
   "dependencies": {
     "react": "^19.2.7",
