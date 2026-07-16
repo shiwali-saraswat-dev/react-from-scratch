@@ -8,13 +8,9 @@
   <body>
     <div id="root"></div>
 
-    <!-- This file i.e. react.development.js contains the React Code which is plain JS -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-
-    <!-- This file i.e. react-dom.development.js is useful for DOM operations or use to modify the DOM -->
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-
-    <script src="./App.js"></script>
+    <!-- type="module" lets the browser understand ES module `import` syntax.
+      Parcel/Vite will bundle React and ReactDOM from node_modules into this file at build time. -->
+    <script type="module" src="./App.js"></script>
 
   </body>
 </html>

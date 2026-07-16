@@ -1,3 +1,12 @@
+
+// Importing React from node_modules (installed via npm) instead of using a CDN <script> link
+import React from "react";
+
+// Importing ReactDOM from node_modules (installed via npm) instead of using a CDN <script> link
+// ReactDOM is responsible for rendering React components into the actual DOM
+import ReactDOM from "react-dom/client";
+
+
 /* Do the below HTML in React:
 <div id="parent">
     <div id="child">
@@ -8,7 +17,6 @@
         <h2>I am H2 tag</h2>
     </div>
 </div> */
-
 
 const div = React.createElement("div", {id: "parent"}, 
     [
