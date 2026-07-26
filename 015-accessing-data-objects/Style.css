@@ -1,0 +1,47 @@
+.featured {
+  background-color: #e80f69;
+  border: 2px solid #000000;
+  border-radius: 8px;
+  padding: 16px;
+  width: 500px;
+  height: 600px;
+  margin: 50px 0;
+}
+
+.featured img{
+  width: 450px;
+  height: 450px;
+  margin: 25px;
+}
+
+.movie-list {
+  background-color: #e80fbd;
+  border: 2px solid #000000;
+  border-radius: 8px;
+  padding: 16px;
+  width: 220px;
+  margin: 50px 0;
+}
+
+.movie-card {
+  border: 1px solid #000;
+  margin: 10px 0;
+}
+
+.actor-list {
+  background-color: #23c8f5;
+  border: 2px solid #000000;
+  border-radius: 8px;
+  padding: 16px;
+  width: 220px;
+  margin: 50px 0;
+}
+
+.director-list {
+  background-color: #0fe869;
+  border: 2px solid #000000;
+  border-radius: 8px;
+  padding: 16px;
+  width: 220px;
+  margin: 50px 0;
+}

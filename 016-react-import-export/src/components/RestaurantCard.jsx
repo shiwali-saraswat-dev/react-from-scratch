@@ -14,12 +14,13 @@ const RestaurantCard = (props) => {
     <div className="res-card">
       <img className="res-logo" src={resData.imgUrl} alt="res-logo" />
       <h3>{resData.resName}</h3>
-      <p>{resData.cuisine}</p>
+      <p>{resData.cuisine.join(", ")}</p> {/* Dum BiryaniVeg BiryaniChiken Biryani => Dum Biryani, Veg Biryani, Chiken Biryani */}
+      {/* Template literal inside JSX curly braces — combines "CURRENCY_SYMBOL + resData.price + static text" into one string, e.g. "₹250 for one" */}
       <h4>{`${CURRENCY_SYMBOL}${resData.price} for one`}</h4>
       <h4>
-        <span>{resData.rating}</span> Stars
+        <span>{`⭐ ${resData.rating}`}</span>
       </h4>
-      <h4>{resData.time} minutes</h4>
+      <h4>{`${resData.time} minutes`}</h4>
     </div>
   );
 };
