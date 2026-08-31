@@ -1,102 +1,89 @@
-# 16 - React Import & Export
+# 018 - Fetching Data with useState & useEffect
 
-A hands-on demo covering **default** and **named** imports/exports in React, built using a restaurant listing app (Food Delivery — Delhi NCR).
+A hands-on demo of fetching live data from an API and rendering it dynamically,
+using React's `useState` and `useEffect` hooks — built on top of a restaurant
+listing app (Food Delivery — Delhi NCR, powered by Swiggy's public API).
 
 ## 📁 Folder Structure
-
 ```
-016-react-import-export/
+018-react-fetch-data/
 ├── index.html
 ├── src/
-│   ├── components/
-│   │   ├── App.jsx
-│   │   └── RestaurantCard.jsx
-│   ├── utils/
-│   │   ├── constants.js
-│   │   └── mockData.js
-│   └── Style.css
+│ ├── components/
+│ │ ├── App.jsx
+│ │ └── RestaurantCard.jsx
+│ ├── utils/
+│ │ └── constants.js
+│ └── Style.css
 ```
 
 ## 🎯 What This Demo Teaches
 
-| Concept | File | Type |
-|---|---|---|
-| Default export | `App.jsx` | Component exported as `export default App` |
-| Default export | `RestaurantCard.jsx` | Component exported as `export default RestaurantCard` |
-| Default export | `mockData.js` | Array exported as `export default restaurantsList` |
-| Named exports | `constants.js` | Multiple constants exported individually |
+| Concept | Where |
+|---|---|
+| `useState` | Storing fetched restaurant list in component state |
+| `useEffect` | Triggering the API call once, when the component mounts |
+| `fetch` + `async/await` | Making a network request and awaiting the JSON response |
+| Optional chaining (`?.`) | Safely accessing deeply nested API response fields |
+| `.find()` | Locating the correct data card inside a variable API response shape |
+| `.map()` + `key` | Rendering a dynamic list of restaurant cards from fetched data |
+| Named imports | Pulling `APP_TITLE`, `MIN_RATING_FOR_TOP` from `constants.js` |
+| Default import | Pulling `RestaurantCard` component |
 
-## 📦 Default Import/Export
+## 🔄 How the Data Flow Works
 
-Used when a file has **one main thing** to export.
-
-```javascript
-// Exporting (in mockData.js)
-export default restaurantsList;
-
-// Importing (in App.jsx)
-import restaurantsList from "../utils/mockData";
-```
-
-**Rules:**
-- No curly braces `{}`
-- You can rename it anything on import — the name doesn't need to match
-- Only **one** default export allowed per file
-
-## 📦 Named Import/Export
-
-Used when a file exports **multiple values**.
+1. Component mounts → `useEffect` runs **once** (empty dependency array `[]`)
+2. `fetchData()` calls the Swiggy API and awaits the JSON response
+3. The response's `cards` array has an **inconsistent structure** — the actual
+   restaurant grid could be at a different index each time — so `.find()` is
+   used to locate the card that actually contains `gridElements.infoWithStyle.restaurants`
+4. Optional chaining (`?.`) prevents crashes if any part of that nested path
+   is missing or `undefined`
+5. `setRestsList(resData)` updates state → triggers a re-render
+6. `restsList.map(...)` renders one `RestaurantCard` per item, using each
+   restaurant's unique `id` as the `key`
 
 ```javascript
-// Exporting (in constants.js)
-export const APP_TITLE = "Food Delivery Restaurants in Delhi NCR";
-export const CURRENCY_SYMBOL = "₹";
-export const MIN_RATING_FOR_TOP = 4;
-export const ZMT_CDN = "https://b.zmtcdn.com/data/dish_photos/";
-
-// Importing (in App.jsx) — Option 1: import only what you need
-import { APP_TITLE, MIN_RATING_FOR_TOP } from "../utils/constants";
-
-// Importing — Option 2: import everything as one object
-import * as Constants from "../utils/constants";
-// usage: Constants.APP_TITLE
+useEffect(() => {
+  fetchData();
+}, []); // empty array = run only once, on mount
 ```
 
-**Rules:**
-- Curly braces `{}` required
-- Names must match **exactly** what was exported
-- A file can have **many** named exports
-- Multiple values can be imported at once, comma-separated
+## ⚠️ Why `.find()` Instead of a Fixed Index?
 
-## 🗂️ Relative Path Cheatsheet
+Swiggy's API doesn't always return the restaurant grid at the same array
+position — depending on location/promotions, extra cards (banners, ads,
+carousels) can be inserted before it. Using `.find()` with a predicate makes
+the code resilient to that instead of breaking on `cards[2]` one day and
+`cards[4]` the next.
 
-| From | To | Path |
-|---|---|---|
-| `index.html` (root) | `src/components/App.jsx` | `./src/components/App.jsx` |
-| `App.jsx` (in `components/`) | `Style.css` (in `src/`) | `../Style.css` |
-| `App.jsx` (in `components/`) | `mockData.js` (in `utils/`) | `../utils/mockData` |
-| `RestaurantCard.jsx` (in `components/`) | `constants.js` (in `utils/`) | `../utils/constants` |
-| `mockData.js` (in `utils/`) | `constants.js` (in `utils/`) | `./constants.js` |
-
-**Rule of thumb:** `./` = same folder, `../` = go up one folder first, then navigate in.
+```javascript
+const restaurantCard = json?.data?.cards?.find(
+  (c) => c?.card?.card?.gridElements?.infoWithStyle?.restaurants
+);
+```
 
 ## ▶️ How to Run
-
-This project runs inside the shared Vite dev server for the whole `react-from-scratch` repo.
 
 ```bash
 npm run dev
 ```
 
 Then open:
-```
-http://localhost:5173/016-react-import-export/index.html
-```
+http://localhost:5173/018-react-fetch-data/index.html
+
+
+> ⚠️ Note: This hits Swiggy's **public but unofficial** API directly from the
+> browser — it may occasionally fail due to CORS restrictions or API changes,
+> since it's not an officially documented/stable endpoint.
 
 ## 🧠 Key Takeaway
 
-- **Default export** → "this file's main thing" → flexible naming on import
-- **Named export** → "this file's specific labeled things" → exact naming required, multiple allowed
+- `useState` → holds data that changes over time and drives re-renders
+- `useEffect` → runs side effects (like API calls) *after* render, safely
+  outside the render logic itself
+- Empty dependency array `[]` → effect runs **once**, on mount only —
+  the classic pattern for "fetch data when the page loads"
 
 ---
 📌 Part of the [react-from-scratch](../README.md) learning series.
