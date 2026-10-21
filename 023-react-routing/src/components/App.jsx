@@ -29,7 +29,7 @@ const appRouter = createBrowserRouter(
     [
         {
             path: "/",
-            element: <AppLayout />, // persistent shell: Header + Outlet + Footer
+            element: <AppLayout />, // persistent shell: Header + Outlet
             children: [
                 {
                     // path: "/", // home — renders Body inside Outlet
@@ -37,11 +37,11 @@ const appRouter = createBrowserRouter(
                     element: <Body />,
                 },
                 {
-                    path: "/about",   // /food-delivery-app-react/about
+                    path: "/about",   // /023-react-routing/about
                     element: <About />,
                 },
                 {
-                    path: "/contact", // /food-delivery-app-react/contact
+                    path: "/contact", // /023-react-routing/contact
                     element: <Contact />,
                 }
             ],

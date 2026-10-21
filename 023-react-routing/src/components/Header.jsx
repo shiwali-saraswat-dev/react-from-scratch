@@ -5,24 +5,6 @@ import { LOGO_URL } from "../utils/constants.js"; // Import the app logo URL fro
 import { NavLink } from "react-router";
 
 const Header = () => {
-
-    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-
-    // Only listens for Escape while the menu is actually open.
-    // (This uses useEffect, not useRef — if you haven't covered
-    // useEffect yet either, you can safely delete this whole block;
-    // the backdrop click below is enough to close the menu.)
-    useEffect(() => {
-        if (!isUserMenuOpen) return;
-
-        const closeOnEscape = (e) => {
-            if (e.key === "Escape") setIsUserMenuOpen(false);
-        };
-
-        document.addEventListener("keydown", closeOnEscape);
-        return () => document.removeEventListener("keydown", closeOnEscape);
-    }, [isUserMenuOpen]);
-
     return (
         <div className="header">
             <div className="logo-container">
@@ -38,12 +20,7 @@ const Header = () => {
                     <li><NavLink to="/contact">Contact Us</NavLink ></li>
 
                     <li className="user-menu">
-                        <button
-                            className="user-trigger"
-                            aria-haspopup="true"
-                            aria-expanded={isUserMenuOpen}
-                            onClick={() => setIsUserMenuOpen((prev) => !prev)}
-                        >
+                        <button className="user-trigger">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
                                 strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
                                 style={{ stroke: "#e6cd26" }}
@@ -53,24 +30,6 @@ const Header = () => {
                             </svg>
                             <span className="user-name">John Doe</span>
                         </button>
-
-                        {isUserMenuOpen && (
-                            <>
-                                {/* Invisible full-screen layer. Clicking anywhere that isn't the button or 
-                                    the menu itself hits this and closes the dropdown — no ref needed. */}
-                                <div
-                                    className="dropdown-backdrop"
-                                    onClick={() => setIsUserMenuOpen(false)}
-                                />
-                                <div className="dropdown" role="menu" aria-label="Account menu">
-                                    <div className="arrow-outer" />
-                                    <div className="arrow-inner" />
-                                        <a href="#" className="dropdown-item" role="menuitem">Profile</a>
-                                        <a href="#" className="dropdown-item" role="menuitem">orders</a>
-                                        <a href="#" className="dropdown-item" role="menuitem">Logout</a>
-                                </div>
-                            </>
-                        )}
                     </li>
                 </ul>
             </div>
