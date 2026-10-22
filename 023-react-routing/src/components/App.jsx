@@ -1,9 +1,28 @@
-import React from "react";
+// ═════════════════════════════════════════════════════════════════════
+// 023-react-routing / App.jsx
+//
+// What this file does, in order:
+//   1. Defines the layout shared by every page (AppLayout)
+//   2. Defines which URL shows which component (the route tree)
+//   3. Creates the router from that tree (createBrowserRouter)
+//   4. Hands the router to React (RouterProvider)
+//
+// What happens when the URL changes (for example the user clicks "About"):
+//   URL becomes /023-react-routing/about
+//   -> the router removes the basename, leaving "/about"
+//   -> it matches "/about" against the route tree
+//   -> only the <Outlet /> content changes (Body -> About)
+//   -> Header stays mounted and the browser never reloads the page
+// ═════════════════════════════════════════════════════════════════════
+
 import ReactDOM from "react-dom/client";
 
-// createBrowserRouter  — creates the route config using the HTML5 History API (clean URLs, no hash)
-// RouterProvider       — renders the router into the React tree, replaces the old <BrowserRouter> wrapper
-// Outlet               — placeholder that renders the matched child route's component in the parent layout
+// createBrowserRouter : builds the router object from a route array.
+//                       Uses the HTML5 History API, so URLs are clean (/about, not /#/about).
+// Outlet : a placeholder inside a parent route's component. It marks where the matched child route renders.
+// RouterProvider : puts the router into the React tree so every component can use routing hooks (useNavigate, useParams, ...). 
+//                  It replaces the older <BrowserRouter> wrapper. 
+//                  In v7 it is imported from "react-router/dom" when you render with react-dom.
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router";
 
 import "../Style.css";
@@ -13,27 +32,33 @@ import About from "./About";
 import Contact from "./Contact";
 import Error from "./Error";
 
-// Layout: Header stays on every page, Outlet swaps the matched child route
+// AppLayout is the parent route's component. Everything that must appear on EVERY page (header, footer, wrappers etc) goes here.
+// <Outlet /> is the swap area. The router puts the matched child here:
+//     "/"        -> <Body />
+//     "/about"   -> <About />
+//     "/contact" -> <Contact />
+// Without <Outlet />, the child routes match but nothing is rendered.
 const AppLayout = () => (
   <div className="app">
-    <Header />
-    <Outlet />
+    <Header /> {/* stays mounted across navigation, so it never re-renders from scratch */}
+    <Outlet /> {/* the matched child route renders here */}
   </div>
 );
 
-// Define all application routes using the HTML5 History API
-// AppLayout is the root layout — all child routes render inside its <Outlet />
-// errorElement catches any unmatched route or render error and shows the Error page
-// basename scopes all routes under the /food-delivery-app-react subdirectory (GitHub Pages)
+// Each route is an object:
+//   path         -> the URL segment this route matches
+//   element      -> the component to render when it matches
+//   children     -> nested routes, rendered inside the parent's <Outlet />
+//   errorElement -> what to render if this route or its children fail
+//   index: true  -> "default child", renders when the URL is exactly the parent's path
 const appRouter = createBrowserRouter(
     [
         {
             path: "/",
-            element: <AppLayout />, // persistent shell: Header + Outlet
+            element: <AppLayout />, // parent route: the shared shell(Header + Outlet)
             children: [
                 {
-                    // path: "/", // home — renders Body inside Outlet
-                    index: true, // "/" → home (default)
+                    path: "/", // home — renders Body inside Outlet
                     element: <Body />,
                 },
                 {
@@ -45,10 +70,20 @@ const appRouter = createBrowserRouter(
                     element: <Contact />,
                 }
             ],
-            errorElement: <Error />, // shown on 404 or any route-level error
+
+            // errorElement (404 / error routes) - Shown when:
+            // (a) no route matches the URL (React Router creates a 404), or
+            // (b) a component or loader under this route throws.
+            // Because it is on the PARENT, it covers every child below.
+            // Inside it, Error.jsx reads the details with useRouteError().
+            errorElement: <Error />, 
         },
     ],
-    { basename: "/023-react-routing" } // base path for GitHub Pages deployment
+    // basename: the part of the URL that belongs to the HOSTING, not to the app.
+    // The app is served under /023-react-routing/, so the router strips it before matching.
+    // Consequence: write paths WITHOUT it everywhere (<Link to="/about">, navigate("/")).
+    // Do not hardcode it in links, or you will get /023-react-routing/023-react-routing/about.
+    { basename: "/023-react-routing" }
 );
 
 // Create a React root attached to the DOM element with id "root".

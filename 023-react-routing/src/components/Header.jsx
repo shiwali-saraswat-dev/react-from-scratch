@@ -1,8 +1,13 @@
-import { useState, useEffect } from "react";
 import { LOGO_URL } from "../utils/constants.js"; // Import the app logo URL from the centralized constants file
 
 // NavLink — like <Link> but adds "active" class automatically when its route matches the current URL
 import { NavLink } from "react-router";
+
+// NavLink passes { isActive } to a className function.
+// isActive is true when the link's "to" matches the current URL.
+// The returned string is used as the className, so "active" can be styled in Style.css:
+//     nav a.active { font-weight: bold; border-bottom: 2px solid; }
+const linkClass = ({ isActive }) => (isActive ? "active" : "");
 
 const Header = () => {
     return (
@@ -15,9 +20,13 @@ const Header = () => {
 
             <div className="nav-items">
                 <ul>
-                    <li><NavLink to="/">Home</NavLink ></li>
-                    <li><NavLink to="/about">About Us</NavLink ></li>
-                    <li><NavLink to="/contact">Contact Us</NavLink ></li>
+                    {/* "to" is relative to the router's basename, so write "/about", not "/023-react-routing/about".
+                    "end" on the Home link: matching is by prefix by default, and "/" is a prefix of every URL. 
+                    Without "end", Home would be highlighted on every page.
+                    Use "end" on any link whose path is also the start of other links' paths. */}
+                    <li><NavLink to="/" end className={linkClass}>Home</NavLink ></li>
+                    <li><NavLink to="/about" className={linkClass}>About Us</NavLink ></li>
+                    <li><NavLink to="/contact" className={linkClass}>Contact Us</NavLink ></li>
 
                     <li className="user-menu">
                         <button className="user-trigger">
