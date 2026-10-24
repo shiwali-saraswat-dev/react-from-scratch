@@ -1,0 +1,42 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, sans-serif; background: #fff; color: #1f2933; }
+.wrap { max-width: 880px; margin: 0 auto; padding: 24px; }
+h1 { font-size: 22px; margin: 0 0 4px; }
+h3 { margin: 24px 0 8px; font-size: 15px; text-transform: uppercase; letter-spacing: .05em; color: #52606d; }
+.sub { color: #52606d; margin: 0 0 16px; }
+code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+
+/* Type badges: one color per concept, used everywhere */
+.badge { display: inline-block; min-width: 84px; text-align: center; padding: 3px 10px;
+         border-radius: 999px; font-size: 12px; font-weight: 600; color: #fff; }
+.badge.link    { background: #2563eb; }
+.badge.navlink { background: #7c3aed; }
+.badge.anchor  { background: #dc2626; }
+.badge.route   { background: #059669; }
+.badge.routes  { background: #d97706; }
+
+/* Status panel */
+.status { border: 1px solid #d9e2ec; border-radius: 8px; padding: 12px 16px; display: grid; gap: 8px; }
+.status > div { display: flex; align-items: center; gap: 10px; }
+.status span { flex: 0 0 280px; color: #52606d; font-size: 14px; }
+.status button { padding: 2px 12px; cursor: pointer; }
+
+/* Link rows */
+.row { display: grid; grid-template-columns: 100px 220px 1fr; align-items: center; gap: 12px;
+       padding: 10px 0; border-bottom: 1px solid #e4e7eb; }
+.row-text { display: flex; flex-direction: column; font-size: 14px; }
+.row-text span { color: #52606d; }
+.row a { color: #1f2933; text-decoration: none; border-bottom: 2px solid transparent; }
+.row a:hover { border-bottom-color: #9aa5b1; }
+
+/* NavLink adds the class "active" by itself when it matches the current URL */
+.row a.active { color: #7c3aed; font-weight: 700; border-bottom-color: #7c3aed; }
+
+em { font-style: normal; font-size: 11px; padding: 1px 6px; border-radius: 4px; margin-left: 6px; }
+em.on  { background: #d1fae5; color: #065f46; }
+em.off { background: #f1f5f9; color: #7b8794; }
+
+/* Result area */
+.routes-box { border: 2px dashed #d97706; border-radius: 8px; padding: 12px 16px; }
+.page { margin-top: 8px; }
+.page h2 { margin: 8px 0; }
