@@ -5,7 +5,7 @@ My structured journey through React, from plain HTML and JavaScript to routing a
 ## Table of Contents
 
 | #   | Topic                                                                             | Status         |
-|-----|---------------------------------------------------------------                    |----------------|
+|-----|-----------------------------------------------------------------------------------|----------------|
 | 001 | [Hello World (HTML)](001-hello-world-html)                                        | ✅ Done        |
 | 002 | [Hello World (JavaScript)](002-hello-world-javascript)                            | ✅ Done        |
 | 003 | [Hello World (React)](003-hello-world-react)                                      | ✅ Done        |
@@ -17,36 +17,38 @@ My structured journey through React, from plain HTML and JavaScript to routing a
 | 009 | [Component Composition](009-component-composition)                                | ✅ Done        |
 | 010 | [JS Expressions in JSX](010-js-expressions-in-jsx)                                | ✅ Done        |
 | 011 | [React Element Inside JSX](011-react-element-inside-jsx)                          | ✅ Done        |
-| 012 | [Header Component](012-header-component)                                          | ✅ Done        |
-|     |    - HTML/CSS version                                                             |                |
-|     |    - React version                                                                |                |
+| 012 | [Header Component](012-header-component)                                          |-----------------|
+|     |    - HTML/CSS version                                                             | ✅ Done        |
+|     |    - React version                                                                | ✅ Done        |
 | 013 | [Inline Styling](013-inline-styling)                                              | ✅ Done        |
 | 014 | [Props Patterns](014-props-patterns)                                              | ✅ Done        |
 | 015 | [Accessing Data Objects](015-accessing-data-objects)                              | ✅ Done        |
 | 016 | [Import & Export](016-react-import-export)                                        | ✅ Done        |
-| 017 | [Hooks: useState](017-react-hooks-usestate)                                       | ✅ Done        |
-|     |    - Core JS                                                                      |                |
-|     |    - useState                                                                     |                |
-| 018 | [Fetching Data](018-react-fetch-data)                                             | ✅ Done        |
-| 019 | [Loading UI](019-react-loading-ui)                                                | ✅ Done        |
-|     |    - Spinner                                                                      |                |
-|     |    - Shimmer UI                                                                   |                |
-| 020 | [Toggle Button](020-react-toggle-btn)                                             | ✅ Done        |
-| 021 | [Search](021-react-search)                                                        | ✅ Done        |
-| 022 | [Images](022-react-images)                                                        | ✅ Done        |
-| 023 | [Routing (React Router)](023-react-routing)                                       | ✅ Done        |
-|     | - Simple Routing  (createBrowserRouter + RouterProvider)                          |                |
-|     | - Declarative Style (Route, Routes, Link, NavLink)                                |                |
-|     | - Error Routes (404 & error routes (errorElement / errorBoundary))                |                |
-| 024 | [Nested Routes & Outlet](024-nested-routes)                                       | ✅ Done        |
-| 025 | [Dynamic Routes & URL Params](025-dynamic-routes)                                 | ✅ Done        |
-| 026 | [Loader and Action](026-loader-and-action)                                        | ⬜ Not started |
-| 027 | [Other React Routers](027-other-react-routers)                                    | ⬜ Not started |
-|     |    - createHashRouter                                                             |                |
-|     |    - createMemoryRouter                                                           |                |
-| 028 | [Class Component](028-class-component)                                            | ✅ Done        |
-| 029 | [Parent Child Order in Class Component](029-class-parent-child-order)             | 🚧 In progress |
-| 030 | [LifeCycle Methods](030-react-lifecycle-methods)                                  | ⬜ Not started |
+| 017 | [Hooks: useState](017-react-hooks-usestate)                                       |-----------------|
+|     |    - Core JS                                                                      | ✅ Done        |
+|     |    - useState                                                                     | ✅ Done        |
+| 018 | [Conditional Rendering](018-conditional-rendering)                                | ⬜ Not started |
+| 019 | [Fetching Data](019-react-fetch-data)                                             | ✅ Done        |
+| 020 | [Loading UI](020-react-loading-ui)                                                |-----------------|
+|     |    - Spinner                                                                      | ✅ Done        |
+|     |    - Shimmer UI                                                                   | ✅ Done        |
+| 021 | [Toggle Button](021-react-toggle-btn)                                             | ✅ Done        |
+| 022 | [Search](022-react-search)                                                        | ✅ Done        |
+| 023 | [Images](023-react-images)                                                        | ✅ Done        |
+| 024 | [React Router Declarative Mode](024-react-router-declarative-mode)                | ✅ Done        |
+|     | - Simple Routing                                                                  | ✅ Done        |
+| 025 | [React Router Data Mode](025-react-router-data-mode)                              |-----------------|
+|     | - Simple Routing (createBrowserRouter + RouterProvider)                           | ✅ Done        |
+|     | - Nested Routes & Outlet                                                          | ✅ Done        |
+|     | - Dynamic Routes & URL Params                                                     | ✅ Done        |
+|     | - Error Routes (404 & error routes (errorElement / errorBoundary))                | ✅ Done        |
+|     | - Loader & Action                                                                 | ⬜ Not started |
+|     | - Loader Errors (Response, isRouteErrorResponse)                                  | ⬜ Not started |
+|     | - Other Routers (createHashRouter, createMemoryRouter)                            | ⬜ Not started |
+| 026 | [React Router Framework Mode](026-react-router-framework-mode)                    | ⬜ Not started |
+| 027 | [Class Component](027-class-component)                                            | ✅ Done        |
+| 028 | [Parent Child Order in Class Component](028-class-parent-child-order)             | 🚧 In progress |
+| 029 | [LifeCycle Methods](029-react-lifecycle-methods)                                  | ⬜ Not started |
 
 **Legend:** ⬜ Not started · 🚧 In progress · ✅ Completed
 
@@ -55,7 +57,7 @@ My structured journey through React, from plain HTML and JavaScript to routing a
 
 - One folder per concept, numbered in learning order
 - Each demo folder has its own `index.html`, so it runs as a separate page of the same Vite project
-- Folders with sub-topics (such as `023-react-routing`) use numbered subfolders, each with its own router `basename`
+- Folders with sub-topics (such as `025-react-router-data-mode`) use numbered subfolders, each with its own router `basename`
 - Topics not started yet are kept as placeholder folders with a short note
 - Progress in the tables above is updated when a topic is finished
 
