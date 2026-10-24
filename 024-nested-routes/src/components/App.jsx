@@ -83,7 +83,7 @@ const appRouter = createBrowserRouter(
     // The app is served under /023-react-routing/, so the router strips it before matching.
     // Consequence: write paths WITHOUT it everywhere (<Link to="/about">, navigate("/")).
     // Do not hardcode it in links, or you will get /023-react-routing/023-react-routing/about.
-    { basename: "/023-react-routing" }
+    { basename: "/024-nested-routes" }
 );
 
 // Create a React root attached to the DOM element with id "root".

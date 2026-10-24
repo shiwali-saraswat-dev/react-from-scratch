@@ -20,7 +20,7 @@ const appRouter = createBrowserRouter(
             element: <CategoryRestaurant />,
         },
     ],
-    { basename: "/024-dynamic-routes" }
+    { basename: "/025-dynamic-routes" }
 );
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
