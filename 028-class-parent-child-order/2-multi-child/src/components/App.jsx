@@ -10,18 +10,16 @@
 //     Parent render
 //     Child constructor
 //     Child render
-//     Child componentDidMount
-//     Parent componentDidMount
+
 //
 //   On button click (updating)
 //     Parent render
 //     Child render
-//     Child componentDidUpdate
-//     Parent componentDidUpdate
+
 //
 // Rule of thumb:
 //   constructor + render        -> top-down  (parent first, then child)
-//   componentDidMount / Update  -> bottom-up (child first, then parent)
+
 // ─────────────────────────────────────────────────────────────────────
 
 // Named import of the base class. It gives this class render(), this.props, this.state, this.setState().
