@@ -12,7 +12,7 @@ const appRouter = createBrowserRouter(
             element: <About />,
         },
     ],
-    { basename: "/028-class-component" }
+    { basename: "/027-class-component" }
 );
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
