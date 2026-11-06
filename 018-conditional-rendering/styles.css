@@ -1,0 +1,287 @@
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Figtree:wght@400;500;600&display=swap");
+
+:root {
+  --bg: #f4f6f3;
+  --surface: #ffffff;
+  --ink: #17211b;
+  --ink-soft: #5b675f;
+  --line: #dfe5df;
+  --basil: #1d7a4b;
+  --basil-dark: #14593a;
+  --basil-tint: #e3f2ea;
+  --turmeric: #f0b323;
+  --turmeric-tint: #fdf3d4;
+  --chili: #b9382b;
+  --chili-tint: #fbe6e3;
+  --radius: 14px;
+  --font-display: "Bricolage Grotesque", "Segoe UI", sans-serif;
+  --font-body: "Figtree", "Segoe UI", system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1612;
+    --surface: #17211b;
+    --ink: #eef3ee;
+    --ink-soft: #a3b0a7;
+    --line: #28352d;
+    --basil: #4cc58a;
+    --basil-dark: #7ddcab;
+    --basil-tint: #17382a;
+    --turmeric: #f0b323;
+    --turmeric-tint: #3a3014;
+    --chili: #ff8a7a;
+    --chili-tint: #3d1d19;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.app {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+}
+
+/* ---------- Header ---------- */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.app-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.welcome {
+  margin: 0 0 24px;
+  color: var(--ink-soft);
+}
+
+/* ---------- Buttons ---------- */
+.toolbar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.btn {
+  font: inherit;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+}
+
+.btn:hover {
+  border-color: var(--basil);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--turmeric);
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  background: var(--basil);
+  border-color: var(--basil);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--basil-dark);
+  border-color: var(--basil-dark);
+}
+
+.btn[aria-pressed="true"] {
+  background: var(--basil-tint);
+  border-color: var(--basil);
+  color: var(--basil-dark);
+}
+
+/* ---------- List + cards ---------- */
+.restaurant-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--basil);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+}
+
+.card.is-closed {
+  border-left-color: var(--line);
+  background: transparent;
+  color: var(--ink-soft);
+}
+
+.card-top {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+}
+
+.card-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.card.is-closed .card-name {
+  color: var(--ink-soft);
+}
+
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+/* ---------- Pills ---------- */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.pill-open {
+  background: var(--basil-tint);
+  color: var(--basil-dark);
+}
+
+.pill-open::before,
+.pill-closed::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.pill-closed {
+  background: var(--line);
+  color: var(--ink-soft);
+}
+
+.pill-top {
+  background: var(--turmeric-tint);
+  color: #8a6200;
+}
+
+@media (prefers-color-scheme: dark) {
+  .pill-top {
+    color: var(--turmeric);
+  }
+}
+
+.pill-offer {
+  background: var(--chili-tint);
+  color: var(--chili);
+}
+
+.pill-time {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+}
+
+/* ---------- Early-return states (loading / error / empty) ---------- */
+.state {
+  padding: 40px 20px;
+  text-align: center;
+  border: 1.5px dashed var(--line);
+  border-radius: var(--radius);
+  color: var(--ink-soft);
+}
+
+.state h2 {
+  margin: 0 0 4px;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--ink);
+}
+
+.state p {
+  margin: 0;
+}
+
+.state-error {
+  border-color: var(--chili);
+  background: var(--chili-tint);
+}
+
+.state-error h2 {
+  color: var(--chili);
+}
+
+.spinner {
+  width: 28px;
+  height: 28px;
+  margin: 0 auto 12px;
+  border: 3px solid var(--line);
+  border-top-color: var(--basil);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 3s;
+  }
+  .btn {
+    transition: none;
+  }
+}
