@@ -1,0 +1,199 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+.app h1 {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.filter{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;                 /* space between the two buttons, adjust as needed */
+    max-width: 100%;
+    height: 100px;
+    padding: 20px 0;
+    box-shadow: 0 2px 6px rgba(188, 186, 186, 0.1);
+}
+
+.filter-btn {
+    background-color: #ffffff;
+    color: #c48e34f5;
+    border: 2px solid #c48e34f5;
+    border-radius: 30px;
+    padding: 10px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    margin: 20px 0;
+}
+
+.filter-btn:hover {
+    background-color: #c48e34f5;
+    color: #ffffff;
+}
+
+.res-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+    padding: 40px;
+}
+
+.res-container h1 {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin: 0 0 30px;
+    text-align: center;
+}
+
+.res-card {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 8px;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.res-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.res-logo {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 4px 4px 0 0;
+    display: block;
+}
+
+.res-card h3, .res-card p, .res-card h4 {
+    margin: 8px 16px;
+}
+
+.res-card > h3 {
+    text-align: center;
+    color: #1a1a1a;
+}
+
+.res-card > h4 {
+    text-align: left;
+    font-size: 15px;
+    color: #333;
+}
+
+.res-card > h4 > span {
+    width: 50px;
+    height: 30px;
+    border-radius: 4px;
+    padding: 3px 8px 4px;
+    background-color: #2e7d32;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.listing-title {
+    margin: 32px 0 12px;
+    padding-bottom: 8px;
+    font-size: 1.3rem;
+    color: #1f2937;
+    border-bottom: 2px solid #e6cd26;   /* same gold as your header */
+} 
+
+.promoted-wrapper {
+    display: inline-block;
+    position: relative;
+}
+
+.promoted-badge {
+    z-index: 2;
+    letter-spacing: .2px;
+    color: #fff;
+    pointer-events: none;
+    background: linear-gradient(90deg, #ff5a5f, #ff7a5c);
+    border-radius: 0 8px 8px 0;
+    padding: 5px 12px 5px 10px;
+    font-size: .8rem;
+    font-weight: 700;
+    position: absolute;
+    top: 14px;
+    left: 0;
+    box-shadow: 0 2px 6px #ff5a5f59;
+}
+
+.card-wrap {
+  position: relative;      /* so badges and overlay position against the card */
+}
+
+:root {
+  --card-img-h: 252px;   /* set this to your .res-logo height */
+}
+
+/* Discount: right corner, mirrored ribbon, dark + gold to match the header */
+.discount-badge {
+  position: absolute;
+  top: 14px;
+  right: 0;
+  left: auto;
+  z-index: 2;
+  padding: 5px 10px 5px 12px;
+  border-radius: 8px 0 0 8px;
+  background: #1f2937;
+  color: #e6cd26;
+  font-size: .8rem;
+  font-weight: 800;
+  letter-spacing: .2px;
+  pointer-events: none;
+  box-shadow: 0 2px 6px rgba(31, 41, 55, .35);
+}
+
+/* Overlay: a pill centred on the image, so the card text stays readable */
+.delivery-overlay {
+  position: absolute;
+  top: calc(var(--card-img-h) / 2);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;                  /* above both badges */
+  width: max-content;
+  max-width: 90%;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(31, 41, 55, .9);
+  color: #fff;
+  font-size: .85rem;
+  font-weight: 700;
+  text-align: center;
+  pointer-events: none;
+}
+
+.not-delivering > :first-child {
+  filter: grayscale(1);
+  opacity: 0.6;
+}
