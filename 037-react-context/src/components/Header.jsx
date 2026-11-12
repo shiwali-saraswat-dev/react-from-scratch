@@ -1,10 +1,5 @@
-// useState   -> local state (isLoggedIn, isUserMenuOpen)
-// useEffect  -> imported but not used in this version (see note below)
 // useContext -> reads the shared user data from Context
-import { useState, useEffect, useContext } from "react";
-
-// App logo URL, kept in one place in utils/constants.js
-import { LOGO_URL } from "../utils/constants.js";
+import { useContext } from "react";
 
 // NavLink -> like <Link> (changes the URL without a page reload), but also adds an
 // "active" class to the link that matches the current URL, so you can style it
@@ -12,6 +7,9 @@ import { NavLink } from "react-router";
 
 // Context object. The value is supplied by <UserContext.Provider> in AppLayout (App.jsx).
 import UserContext from "../utils/UserContext.js";
+
+// App logo URL, kept in one place in utils/constants.js
+import { LOGO_URL } from "../utils/constants.js";
 
 /*
  * HEADER (function component)
@@ -21,11 +19,6 @@ import UserContext from "../utils/UserContext.js";
  * navigation links, and the logged-in user's name linking to /profile.
  */
 const Header = () => {
-    // Local state. Declared for the login button and dropdown menu, but not used yet
-    // in the JSX below. Remove them or wire them up (see the earlier login/logout version).
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-
     // Reads { user, setUserName } from the NEAREST UserContext.Provider above.
     //   user        -> the user object (name, email, phone, address, ...)
     //   setUserName -> function that changes the name stored in AppLayout's state

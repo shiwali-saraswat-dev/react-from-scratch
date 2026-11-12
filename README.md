@@ -54,6 +54,13 @@ My structured journey through React, from plain HTML and JavaScript to routing a
 |     | - Single Child (029-react-lifecycle-methods/1-single-child/)                    | ✅ Done        |
 |     | - Multi Child (029-react-lifecycle-methods/2-multi-child/)                      | ✅ Done        |
 | 030 | [Class Component - Fetch API] (030-class-component-fetch-api)                   | ✅ Done        |
+| 031 | [React Custom Hook] (031-react-custom-hook)                                     | ✅ Done        |
+| 032 | [Offline Indicator] (032-offline-indicator)                                     | ✅ Done        |
+| 033 | [Higher Order Component] (033-higher-order-component)                           | ✅ Done        |
+| 034 | [Controlled vs Uncontrolled Component] (034-controlled-vs-uncontrolled)         | ✅ Done        |
+| 035 | [Lazy Loading] (035-react-lazy-loading)                                         | ✅ Done        |
+| 036 | [Props Drilling] (036-react-props-drilling)                                     | ✅ Done        |
+| 037 | [React - Context] (037-react-context)                                           | ✅ Done        |
 **Legend:** ⬜ Not started · 🚧 In progress · ✅ Completed
 
 
