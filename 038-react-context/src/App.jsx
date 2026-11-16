@@ -89,7 +89,7 @@ const appRouter = createBrowserRouter(
       errorElement: <Error />,
     },
   ],
-  { basename: "/037-react-context" }
+  { basename: "/038-react-context" }
 );
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
