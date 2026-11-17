@@ -1,95 +1,179 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import {useState} from "react"; // named import — useState is a named export from "react"
-import "../Style.css";
-import restaurantsList from "../utils/mockData.js";
-import RestaurantCard from "./RestaurantCard";
+/* ==========================================================
+   useRef DEMO  -  let vs useState vs useRef
+   ==========================================================
+
+   WHAT IS useRef?
+   ---------------
+   useRef gives you a "box" that React keeps alive between renders:
+
+       const ref = useRef(0);
+       // ref is NOT the number 0.
+       // ref is an object:  { current: 0 }
+
+   You read and write the value through `ref.current`.
+
+   THE TWO SUPERPOWERS
+   -------------------
+   1. The value SURVIVES re-renders (it is not reset to the initial value).
+   2. Changing `ref.current` does NOT trigger a re-render.
+
+   COMPARING THE THREE THINGS IN THIS DEMO
+   ----------------------------------------
+   | Feature                         | let x   | useState | useRef  |
+   |---------------------------------|---------|----------|---------|
+   | Survives re-renders?            | NO      | YES      | YES     |
+   | Changing it re-renders the UI?  | NO      | YES      | NO      |
+   | Reset to initial every render?  | YES     | NO       | NO      |
+
+   WHAT YOU WILL SEE WHEN YOU CLICK
+   --------------------------------
+   Increase x   -> console shows x=1, x=2, ... but the screen stays "Let = 0".
+                   `x` is a plain variable. Changing it does not re-render,
+                   so React never repaints the number.
+                   Also, any re-render creates a NEW `let x = 0`, so it
+                   always starts again from 0.
+
+   Increase Y   -> the screen updates ("State = 1, 2, ...") because setY
+                   triggers a re-render. State survives re-renders.
+
+   Increase Ref -> console shows ref= 1, 2, ... but the screen still shows
+                   "Ref = 0". The value IS changing (it survived), but no
+                   re-render happened, so the screen is not updated.
+                   Now click "Increase Y": the component re-renders and the
+                   screen suddenly shows the latest ref value.
+                   This proves: ref remembers, but does not repaint.
+
+   Stop Printing -> the interval id lives in a ref, so this button (created
+                   in a later render) can still reach the SAME interval and
+                   stop it. A `let` variable would be lost on every render.
+
+   FLOW
+   ----
+       setState(...)           ref.current = ...
+            |                        |
+            v                        v
+        re-render              nothing happens
+            |                  (value is just stored;
+            v                   the screen is unchanged
+        screen updates          until some other re-render)
+
+   WHEN TO USE useRef
+   ------------------
+   1. Store a value that must persist but should NOT cause a re-render:
+        - timer / interval ids (this demo)
+        - previous value of a prop or state
+        - a render counter
+        - a flag like "isFirstRender"
+   2. Get direct access to a DOM element:
+        const inputRef = useRef(null);
+        <input ref={inputRef} />
+        inputRef.current.focus();   // after mount, current = the <input> element
+
+   IMPORTANT FACTS TO REMEMBER
+   ---------------------------
+   1. If the value is shown on screen, use useState, not useRef.
+   2. Do not read or write ref.current during rendering (React docs rule).
+      Render must be pure. Read/write refs in event handlers and effects.
+      NOTE: this demo displays `ref.current` while rendering on purpose,
+      only to show that it goes stale. Do not do this in real code.
+   3. The ref object itself is the same object on every render. Only its
+      `current` property changes.
+   4. For DOM refs, `current` is null until React mounts the element.
+   ========================================================== */
+
+import { useState, useRef, useEffect } from "react";
+import { createRoot } from "react-dom/client";
+import "../Style.css"; // plain CSS (converted from Tailwind)
 
 const App = () => {
-  // ─── Different starting values you could pass to useState ───
-  // const [restsList] = useState();                                 // undefined by default
-  // const [restsList] = useState([]);                               // empty array as default
-  // const [restsList] = useState(null);                             // null as default
-  // const [restsList] = useState([{ id: 1, resName: "Sagar" }]);    // one hardcoded restaurant
-  // const [restsList] = useState(restaurantsList);                  // full mock data (what we actually use)
+  // ---------- 1. State: survives renders, CAUSES a re-render ----------
+  const [y, setY] = useState(0);
 
-  // ─── Never modify state directly ───
-  // const [restsList, setRestsList] = useState(restaurantsList);
-  // restsList = [];        // ❌ INVALID — restsList is not a normal variable, can't reassign it
-  // setRestsList([]);      // ✅ VALID — always update state through its setter function
+  // ---------- 2. Plain variable: reset to 0 on EVERY render ----------
+  // Updating it never triggers a re-render, so the screen never changes.
+  let x = 0;
 
-  // ─── Naming convention (industry standard) ───
-  // If the state variable is "restsList", its setter MUST be named "setRestsList"
-  // (i.e. "set" + exact same name). This isn't enforced by React, but every
-  // React codebase follows it — breaking the pattern makes code harder to read.
+  // ---------- 3. Ref: survives renders, does NOT cause a re-render ----------
+  // Not the same as `let ref = 0`. It is an object: { current: 0 }
+  const ref = useRef(0);
 
-  // ─── What state actually does ───
-  // State keeps the UI layer in sync with the data layer, continuously.
-  // Whenever a state variable updates (via its setter), React automatically
-  // re-renders the component to reflect the new value — no manual DOM updates needed.
+  // Logs on every render, so you can see exactly when React re-renders.
+  console.log("Rendering....");
 
-  // ─── How useState() works under the hood — three equivalent ways to write this ───
-  // Step 1: useState returns an array with exactly 2 items — [currentValue, setterFunction]
-  //   const arr = useState(restaurantsList);
-  //   arr[0] → current state value   |   arr[1] → the setter function
+  // ---------- 4. Ref holding a timer id ----------
+  // Starts as null; filled with the interval id after mount.
+  const i = useRef(null);
 
-  // Step 2: Pulling both values out manually (destructuring "by hand")
-  //   const restsList = arr[0];
-  //   const setRestsList = arr[1];
+  useEffect(() => {
+    // Start printing every second.
+    i.current = setInterval(() => {
+      console.log("Namaste React", Math.random());
+    }, 1000);
 
-  // Step 3: Array destructuring — the actual syntax we write (does Step 1 + 2 in one line)
-  const [restsList, setRestsList] = useState(restaurantsList);
-
-  const resetFilter = () => {
-    setRestsList(restaurantsList);
-  };
+    // Cleanup: stop the interval when the component unmounts.
+    // (In dev, Strict Mode runs mount -> cleanup -> mount to verify this.
+    //  Without cleanup you would end up with two intervals.)
+    return () => clearInterval(i.current);
+  }, []); // [] = run once after the first render
 
   return (
-    <div className="app">
-      <h1>My App</h1>
-      
-      <div className="filter">
-        {/*
-          ─── OPTION 1: Inline logic directly inside onClick ───
-          The entire filter logic is written right inside the arrow function
-          passed to onClick. No separate named function is declared.
-
-          Pros: quick, no extra function needed for simple one-off logic
-          Cons: gets messy/hard to read if the logic grows longer,
-                and can't be reused elsewhere without copy-pasting
-        */}
+    <div className="demo-card">
+      {/* ---------- let x ---------- */}
+      <div className="demo-row">
         <button
-          className="filter-btn"
+          className="btn btn--green"
           onClick={() => {
-            const filteredList = restaurantsList.filter((res) => {
-              return res.rating >= 4.5; 
-            });
-            setRestsList(filteredList); // updates state → triggers re-render
+            x = x + 1; // changes the variable...
+            console.log("x=" + x); // ...visible in console only
           }}
         >
-          Top Rated Restaurants (4+ stars)
+          Increase x
         </button>
-        {/*
-          ─── OPTION 2: Logic extracted into a separate named function ───
-          Here, "resetFilter" is a function defined OUTSIDE the JSX (elsewhere
-          in the component), and onClick simply references it by name.
-
-          Pros: cleaner JSX, reusable (can call resetFilter from multiple
-                places), easier to read and test
-          Cons: slightly more setup — needs a named function declared beforehand
-        */}
-        <button className="filter-btn" onClick={resetFilter}>Reset</button>
+        {/* Always shows 0: x is re-created as 0 on each render */}
+        <span className="value">Let = {x}</span>
       </div>
 
-      <div className="res-container">
-        <h1>Food Delivery Restaurants in Delhi NCR</h1>
-        {restsList.map((restaurant) => (
-          <RestaurantCard key={restaurant.id} resData={restaurant} />
-        ))}
+      {/* ---------- useState ---------- */}
+      <div className="demo-row">
+        <button className="btn btn--green" onClick={() => setY(y + 1)}>
+          Increase Y
+        </button>
+        {/* Updates immediately: setY triggers a re-render */}
+        <span className="value">State = {y}</span>
       </div>
+
+      {/* ---------- useRef ---------- */}
+      <div className="demo-row">
+        <button
+          className="btn btn--green"
+          onClick={() => {
+            ref.current = ref.current + 1; // value persists, no re-render
+            console.log("ref=", ref.current);
+          }}
+        >
+          Increase Ref
+        </button>
+        {/* Stale until another re-render happens (e.g. click Increase Y) */}
+        <span className="value">Ref = {ref.current}</span>
+      </div>
+
+      {/* ---------- Stop the interval using the id stored in a ref ---------- */}
+      <button
+        className="btn btn--danger"
+        onClick={() => clearInterval(i.current)}
+      >
+        Stop Printing
+      </button>
+
+      <p className="hint">
+        Open the console. 
+        Click each button, then click "Increase Y" to see
+        the Ref value catch up.
+      </p>
     </div>
   );
 };
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<App />);
+createRoot(document.getElementById("root")).render(<App />);
+
+export default App;
